@@ -1,6 +1,5 @@
-# reflect: gRPC reflection CLI [![CI/CD](https://github.com/juliaogris/reflect/workflows/CI/CD/badge.svg?branch=master)](https://github.com/squareup/gurl/actions?query=workflow%3ACI%2FCD+branch%3Amaster)
-
-reflect is a gRPC reflection client for the command line.
+# reflect [![CI/CD](https://github.com/juliaogris/reflect/actions/workflows/cicd.yaml/badge.svg?branch=master)](https://github.com/juliaogris/reflect/actions/workflows/cicd.yaml?query=branch%3Amaster)
+reflect is a gRPC reflection CLI.
 
 Use as
 
@@ -26,11 +25,16 @@ install from source with
 
 ## Development
 
-## Pre-requistes
+### Pre-requistes
 
 * GNU Make 3.81
 * go 1.16.3
 * golangci-lint 1.37.0
 
+To build and test run
+
 	make
+
+for more options see
+
 	make help  # for more options
