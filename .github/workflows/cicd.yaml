@@ -28,6 +28,7 @@ jobs:
       with:
         version: latest
         install-only: true
+    - run: git fetch --prune --unshallow --tags
     - run: make release
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
