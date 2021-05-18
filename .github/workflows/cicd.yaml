@@ -16,7 +16,10 @@ jobs:
     - uses: golangci/golangci-lint-action@master
       with:
         version: v1.37.0
-    - run: make
+    - uses: arduino/setup-protoc@v1
+      with:
+        version: '3.15'
+    - run: make ci
 
   release:
     runs-on: ubuntu-latest

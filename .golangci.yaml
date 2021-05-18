@@ -1,0 +1,28 @@
+issues:
+  exclude-use-default: false
+  exclude:
+    # Captured by errcheck.
+    - '^(G104|G204|G307):'
+    # Very commonly not checked.
+    - 'Error return value of .(.*Close|os\.Remove(All)?|.*Print(f|ln|)|os\.(Un)?Setenv). is not checked'
+    - 'Error return value of `stream.CloseSend` is not checked'
+  exclude-rules:
+    - path: _test\.go
+      linters:
+        - gosec
+      text: 'G304'
+
+linters:
+  enable-all: true # golangci-lint v1.36.0
+  disable:
+    - exhaustivestruct
+    - forbidigo
+    - gochecknoglobals
+    - goconst
+    - goerr113
+    - lll
+    - maligned
+    - nlreturn
+    - paralleltest
+    - testpackage
+    - wsl
