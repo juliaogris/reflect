@@ -10,6 +10,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/juliaogris/reflect/pkg/echo2"
 	"github.com/juliaogris/reflect/pkg/echo3"
 	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/suite"
@@ -23,6 +24,9 @@ import (
 func TestReflectSuite(t *testing.T) {
 	suite.Run(t, &ReflectSuite{format: "json", pbVersion: 3})
 	suite.Run(t, &ReflectSuite{format: "base64", pbVersion: 3})
+	suite.Run(t, &ReflectSuite{format: "bin", pbVersion: 3})
+	suite.Run(t, &ReflectSuite{format: "json", pbVersion: 2})
+	suite.Run(t, &ReflectSuite{format: "base64", pbVersion: 2})
 	suite.Run(t, &ReflectSuite{format: "bin", pbVersion: 3})
 }
 
@@ -39,8 +43,16 @@ type ReflectSuite struct {
 func (s *ReflectSuite) SetupSuite() {
 	t := s.T()
 	s.server = grpc.NewServer()
-	echo3Server := &echo3.Server{}
-	echo3.RegisterEchoServer(s.server, echo3Server)
+	switch s.pbVersion {
+	case 2:
+		echo2Server := &echo2.Server{}
+		echo2.RegisterEchoServer(s.server, echo2Server)
+	case 3:
+		echo3Server := &echo3.Server{}
+		echo3.RegisterEchoServer(s.server, echo3Server)
+	default:
+		require.Fail(t, "unknown proto version")
+	}
 	reflection.Register(s.server)
 	lis, err := net.Listen("tcp", "localhost:0")
 	require.NoError(t, err)

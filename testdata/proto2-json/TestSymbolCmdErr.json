@@ -1,0 +1,11 @@
+{
+  "validHost":  "localhost:0",
+  "originalRequest":  {
+    "host":  "localhost:0",
+    "fileContainingSymbol":  "MISSING"
+  },
+  "errorResponse":  {
+    "errorCode":  5,
+    "errorMessage":  "unknown symbol: MISSING"
+  }
+}

@@ -69,7 +69,7 @@ PROTOC_GO_FLAGS = \
 
 ci-protos: install-proto-tools vendor-protos check-protos
 
-protos: protos-echo3
+protos: protos-echo3 protos-echo2
 	@goimports -w $(PKG_GEN_DIRS)
 
 protos-%:  ## Generate go files from proto and gRPC definitions

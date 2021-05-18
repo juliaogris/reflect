@@ -1,0 +1,17 @@
+{
+  "validHost":  "localhost:0",
+  "originalRequest":  {
+    "host":  "localhost:0",
+    "listServices":  ""
+  },
+  "listServicesResponse":  {
+    "service":  [
+      {
+        "name":  "echo2.Echo"
+      },
+      {
+        "name":  "grpc.reflection.v1alpha.ServerReflection"
+      }
+    ]
+  }
+}

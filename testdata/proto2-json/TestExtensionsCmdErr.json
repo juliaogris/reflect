@@ -1,0 +1,11 @@
+{
+  "validHost":  "localhost:0",
+  "originalRequest":  {
+    "host":  "localhost:0",
+    "allExtensionNumbersOfType":  "MISSING"
+  },
+  "errorResponse":  {
+    "errorCode":  5,
+    "errorMessage":  "unknown type: \"MISSING\""
+  }
+}
