@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/alecthomas/kong"
+	"github.com/juliaogris/reflect/pkg/echo2"
 	"github.com/juliaogris/reflect/pkg/echo3"
 	"golang.org/x/net/http2"
 	"golang.org/x/net/http2/h2c"
@@ -32,6 +33,8 @@ func main() {
 
 func run(addr string) error {
 	s := grpc.NewServer()
+	echo2Server := &echo2.Server{}
+	echo2.RegisterEchoServer(s, echo2Server)
 	echo3Server := &echo3.Server{}
 	echo3.RegisterEchoServer(s, echo3Server)
 	reflection.Register(s)
