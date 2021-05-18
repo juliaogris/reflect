@@ -11,7 +11,7 @@ service Echo {
   rpc Hello (HelloRequest) returns (HelloResponse) {
     option (google.api.http) = { post:"/api/echo/hello" body:"*" };
   };
-  // HeeloStream greets repeatedly.
+  // HelloStream greets repeatedly.
   rpc HelloStream (HelloRequest) returns (stream HelloResponse) {
     option (google.api.http) = { post:"/api/echo/stream" body:"*" };
   };

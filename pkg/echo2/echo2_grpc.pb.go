@@ -21,7 +21,7 @@ const _ = grpc.SupportPackageIsVersion7
 type EchoClient interface {
 	// Hello greets.
 	Hello(ctx context.Context, in *HelloRequest, opts ...grpc.CallOption) (*HelloResponse, error)
-	// HeeloStream greets repeatedly.
+	// HelloStream greets repeatedly.
 	HelloStream(ctx context.Context, in *HelloRequest, opts ...grpc.CallOption) (Echo_HelloStreamClient, error)
 }
 
@@ -80,7 +80,7 @@ func (x *echoHelloStreamClient) Recv() (*HelloResponse, error) {
 type EchoServer interface {
 	// Hello greets.
 	Hello(context.Context, *HelloRequest) (*HelloResponse, error)
-	// HeeloStream greets repeatedly.
+	// HelloStream greets repeatedly.
 	HelloStream(*HelloRequest, Echo_HelloStreamServer) error
 	mustEmbedUnimplementedEchoServer()
 }
