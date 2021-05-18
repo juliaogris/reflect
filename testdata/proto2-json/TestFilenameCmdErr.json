@@ -1,11 +1,11 @@
 {
-  "validHost":  "localhost:0",
-  "originalRequest":  {
-    "host":  "localhost:0",
-    "fileByFilename":  "MISSING"
+  "validHost": "localhost:0",
+  "originalRequest": {
+    "host": "localhost:0",
+    "fileByFilename": "MISSING"
   },
-  "errorResponse":  {
-    "errorCode":  5,
-    "errorMessage":  "unknown file: MISSING"
+  "errorResponse": {
+    "errorCode": 5,
+    "errorMessage": "unknown file: MISSING"
   }
 }

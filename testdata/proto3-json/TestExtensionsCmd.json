@@ -7,8 +7,8 @@
   "allExtensionNumbersResponse": {
     "baseTypeName": "google.protobuf.MethodOptions",
     "extensionNumber": [
-      72295728,
-      1051
+      1051,
+      72295728
     ]
   }
 }

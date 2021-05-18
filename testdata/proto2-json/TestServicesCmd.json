@@ -1,16 +1,16 @@
 {
-  "validHost":  "localhost:0",
-  "originalRequest":  {
-    "host":  "localhost:0",
-    "listServices":  ""
+  "validHost": "localhost:0",
+  "originalRequest": {
+    "host": "localhost:0",
+    "listServices": ""
   },
-  "listServicesResponse":  {
-    "service":  [
+  "listServicesResponse": {
+    "service": [
       {
-        "name":  "echo2.Echo"
+        "name": "echo2.Echo"
       },
       {
-        "name":  "grpc.reflection.v1alpha.ServerReflection"
+        "name": "grpc.reflection.v1alpha.ServerReflection"
       }
     ]
   }

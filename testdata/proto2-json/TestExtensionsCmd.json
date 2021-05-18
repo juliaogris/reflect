@@ -1,14 +1,14 @@
 {
-  "validHost":  "localhost:0",
-  "originalRequest":  {
-    "host":  "localhost:0",
-    "allExtensionNumbersOfType":  "google.protobuf.MethodOptions"
+  "validHost": "localhost:0",
+  "originalRequest": {
+    "host": "localhost:0",
+    "allExtensionNumbersOfType": "google.protobuf.MethodOptions"
   },
-  "allExtensionNumbersResponse":  {
-    "baseTypeName":  "google.protobuf.MethodOptions",
-    "extensionNumber":  [
-      72295728,
-      1051
+  "allExtensionNumbersResponse": {
+    "baseTypeName": "google.protobuf.MethodOptions",
+    "extensionNumber": [
+      1051,
+      72295728
     ]
   }
 }

@@ -93,7 +93,7 @@ func (s *ReflectSuite) TestSymbolCmd() {
 	f := files(t, s.format, s.subDir)
 	s.globals.out = f.out
 
-	cmd := symbolCmd{Symbol: "echo3.Echo3"}
+	cmd := symbolCmd{Symbol: "echo3.Echo"}
 	err := cmd.Run(s.globals)
 
 	require.NoError(t, err)

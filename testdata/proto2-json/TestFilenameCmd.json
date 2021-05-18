@@ -1,11 +1,11 @@
 {
-  "validHost":  "localhost:0",
-  "originalRequest":  {
-    "host":  "localhost:0",
-    "fileByFilename":  "echo/echo.proto"
+  "validHost": "localhost:0",
+  "originalRequest": {
+    "host": "localhost:0",
+    "fileByFilename": "echo/echo.proto"
   },
-  "errorResponse":  {
-    "errorCode":  5,
-    "errorMessage":  "unknown file: echo/echo.proto"
+  "errorResponse": {
+    "errorCode": 5,
+    "errorMessage": "unknown file: echo/echo.proto"
   }
 }
