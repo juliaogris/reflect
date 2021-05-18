@@ -34,7 +34,7 @@ Setup
 and call reflect
 
 	reflect services
-	reflect filename echo3.Echo
+	reflect symbol echo3.Echo
 	reflect filename echo3/echo3.proto
 	reflect extensions google.protobuf.MethodOptions
 	reflect extension google.protobuf.MethodOptions 72295728
