@@ -30,7 +30,7 @@ install:  ## Build and install binaries in $GOBIN
 run: build  ## Run test server
 	$(O)/testserver
 
-.PHONY: build install
+.PHONY: build install run
 
 # --- Test ---------------------------------------------------------------------
 COVERFILE = $(O)/coverage.txt
@@ -47,7 +47,7 @@ cover: test  ## Show test coverage in your browser
 CHECK_COVERAGE = awk -F '[ \t%]+' '/^total:/ {print; if ($$3 < $(COVERAGE)) exit 1}'
 FAIL_COVERAGE = { echo '$(COLOUR_RED)FAIL - Coverage below $(COVERAGE)%$(COLOUR_NORMAL)'; exit 1; }
 
-.PHONY: build-test check-coverage cover test test-short
+.PHONY: check-coverage cover test
 
 # --- Lint ---------------------------------------------------------------------
 
@@ -102,13 +102,12 @@ clean::
 # --- Release -------------------------------------------------------------------
 NEXTTAG := $(shell { git tag --list --merged HEAD --sort=-v:refname; echo v0.0.0; } | grep -E "^v?[0-9]+.[0-9]+.[0-9]+$$" | head -n1 | awk -F . '{ print $$1 "." $$2 "." $$3 + 1 }')
 
-release: releasetag  ## Tag and release binaries for different OS on GitHub release
+release: ## Tag and release binaries for different OS on GitHub release
+	git tag $(NEXTTAG)
+	git push origin $(NEXTTAG)
 	goreleaser release --rm-dist
 
-releasetag:
-	git tag $(NEXTTAG)
-
-.PHONY: dist publish-s3 release releasetag
+.PHONY: release releasetag
 
 # --- Utilities ----------------------------------------------------------------
 COLOUR_NORMAL = $(shell tput sgr0 2>/dev/null)
