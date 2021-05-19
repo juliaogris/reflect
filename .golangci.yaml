@@ -17,6 +17,7 @@ linters:
   disable:
     - exhaustivestruct
     - forbidigo
+    - funlen
     - gochecknoglobals
     - goconst
     - goerr113

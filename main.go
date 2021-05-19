@@ -15,6 +15,7 @@ import (
 	"google.golang.org/protobuf/encoding/prototext"
 	"google.golang.org/protobuf/proto"
 	"google.golang.org/protobuf/reflect/protoreflect"
+	dpb "google.golang.org/protobuf/types/descriptorpb"
 )
 
 var version = "v0.0.0"
@@ -37,6 +38,8 @@ type config struct {
 	Filename   filenameCmd      `cmd:"" help:"Call file_by_filename"`
 	Extension  extensionCmd     `cmd:"" help:"Call file_containing_extension"`
 	Extensions extensionsCmd    `cmd:"" help:"Call all_extension_numbers_of_type"`
+	FDS        fdsCmd           `cmd:"" help:"Decode base64 encoded FileDescriptor"`
+	FD         fdCmd            `cmd:"" help:"Decode base64 encoded FileDescriptorSet"`
 }
 
 type servicesCmd struct{}
@@ -56,6 +59,14 @@ type extensionCmd struct {
 
 type extensionsCmd struct {
 	Type string `arg:""`
+}
+
+type fdCmd struct {
+	FileDescriptor string `arg:""`
+}
+
+type fdsCmd struct {
+	FileDescriptorSet string `arg:""`
 }
 
 func main() {
@@ -78,6 +89,28 @@ func (cfg *config) AfterApply() error {
 	}
 	cfg.hostAddress = cfg.Address
 	return nil
+}
+
+func (f *fdCmd) Run(g globals) error {
+	m := &dpb.FileDescriptorProto{}
+	return decode(f.FileDescriptor, m, g)
+}
+
+func (f *fdsCmd) Run(g globals) error {
+	m := &dpb.FileDescriptorSet{}
+	return decode(f.FileDescriptorSet, m, g)
+}
+
+func decode(b64 string, m protoreflect.ProtoMessage, g globals) error {
+	b, err := base64.StdEncoding.DecodeString(b64)
+	if err != nil {
+		return errors.WithStack(err)
+	}
+	err = proto.Unmarshal(b, m)
+	if err != nil {
+		return errors.WithStack(err)
+	}
+	return printProto(g.out, m, g.Format)
 }
 
 func (s *servicesCmd) Run(g globals) error {
