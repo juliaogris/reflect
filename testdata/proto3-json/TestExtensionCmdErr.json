@@ -1,14 +1,14 @@
 {
-  "validHost":  "localhost:0",
-  "originalRequest":  {
-    "host":  "localhost:0",
-    "fileContainingExtension":  {
-      "containingType":  "MISSING",
-      "extensionNumber":  72295728
+  "validHost": "localhost:0",
+  "originalRequest": {
+    "host": "localhost:0",
+    "fileContainingExtension": {
+      "containingType": "MISSING",
+      "extensionNumber": 72295728
     }
   },
-  "errorResponse":  {
-    "errorCode":  5,
-    "errorMessage":  "unknown type: \"MISSING\""
+  "errorResponse": {
+    "errorCode": 5,
+    "errorMessage": "unknown type: \"MISSING\""
   }
 }

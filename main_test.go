@@ -86,6 +86,7 @@ func (s *ReflectSuite) TestServicesCmd() {
 
 	require.NoError(t, err)
 	requireContentEq(t, f.want, f.got, s.format)
+	requireResponseNoErr(t, f.got, s.format)
 }
 
 func (s *ReflectSuite) TestSymbolCmd() {
@@ -93,11 +94,13 @@ func (s *ReflectSuite) TestSymbolCmd() {
 	f := files(t, s.format, s.subDir)
 	s.globals.out = f.out
 
-	cmd := symbolCmd{Symbol: "echo3.Echo"}
+	symbol := fmt.Sprintf("echo%d.Echo", s.pbVersion)
+	cmd := symbolCmd{Symbol: symbol}
 	err := cmd.Run(s.globals)
 
 	require.NoError(t, err)
 	requireContentEq(t, f.want, f.got, s.format)
+	requireResponseNoErr(t, f.got, s.format)
 }
 
 func (s *ReflectSuite) TestSymbolCmdErr() {
@@ -110,6 +113,7 @@ func (s *ReflectSuite) TestSymbolCmdErr() {
 
 	require.NoError(t, err)
 	requireContentEq(t, f.want, f.got, s.format)
+	requireResponseErr(t, f.got, s.format)
 }
 
 func (s *ReflectSuite) TestFilenameCmd() {
@@ -117,11 +121,13 @@ func (s *ReflectSuite) TestFilenameCmd() {
 	f := files(t, s.format, s.subDir)
 	s.globals.out = f.out
 
-	cmd := filenameCmd{Filename: "echo3/echo3.proto"}
+	filename := fmt.Sprintf("echo%d/echo%d.proto", s.pbVersion, s.pbVersion)
+	cmd := filenameCmd{Filename: filename}
 	err := cmd.Run(s.globals)
 
 	require.NoError(t, err)
 	requireContentEq(t, f.want, f.got, s.format)
+	requireResponseNoErr(t, f.got, s.format)
 }
 
 func (s *ReflectSuite) TestFilenameCmdErr() {
@@ -134,6 +140,7 @@ func (s *ReflectSuite) TestFilenameCmdErr() {
 
 	require.NoError(t, err)
 	requireContentEq(t, f.want, f.got, s.format)
+	requireResponseErr(t, f.got, s.format)
 }
 
 func (s *ReflectSuite) TestExtensionCmd() {
@@ -149,6 +156,7 @@ func (s *ReflectSuite) TestExtensionCmd() {
 
 	require.NoError(t, err)
 	requireContentEq(t, f.want, f.got, s.format)
+	requireResponseNoErr(t, f.got, s.format)
 }
 
 func (s *ReflectSuite) TestExtensionCmdErr() {
@@ -164,6 +172,7 @@ func (s *ReflectSuite) TestExtensionCmdErr() {
 
 	require.NoError(t, err)
 	requireContentEq(t, f.want, f.got, s.format)
+	requireResponseErr(t, f.got, s.format)
 }
 
 func (s *ReflectSuite) TestExtensionsCmd() {
@@ -197,6 +206,19 @@ func (s *ReflectSuite) TestExtensionsCmdErr() {
 
 	require.NoError(t, err)
 	requireContentEq(t, f.want, f.got, s.format)
+	requireResponseErr(t, f.got, s.format)
+}
+
+func requireResponseErr(t *testing.T, fname, format string) {
+	t.Helper()
+	resp := reflectionResponse(t, fname, format)
+	require.NotNilf(t, resp.GetErrorResponse(), "expected error response for %q got nil", fname)
+}
+
+func requireResponseNoErr(t *testing.T, fname, format string) {
+	t.Helper()
+	resp := reflectionResponse(t, fname, format)
+	require.Nilf(t, resp.GetErrorResponse(), "expected no error for %q got %q", fname, resp.GetErrorResponse())
 }
 
 func requireContentEq(t *testing.T, fname1, fname2, format string) {
