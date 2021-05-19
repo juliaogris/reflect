@@ -117,7 +117,7 @@ func (s *ReflectSuite) TestFilenameCmd() {
 	f := files(t, s.format, s.subDir)
 	s.globals.out = f.out
 
-	cmd := filenameCmd{Filename: "echo/echo.proto"}
+	cmd := filenameCmd{Filename: "echo3/echo3.proto"}
 	err := cmd.Run(s.globals)
 
 	require.NoError(t, err)

@@ -1,11 +1,11 @@
 {
-  "validHost": "localhost:0",
-  "originalRequest": {
-    "host": "localhost:0",
-    "fileContainingSymbol": "echo3.Echo"
+  "validHost":  "localhost:0",
+  "originalRequest":  {
+    "host":  "localhost:0",
+    "fileContainingSymbol":  "echo3.Echo"
   },
-  "errorResponse": {
-    "errorCode": 5,
-    "errorMessage": "unknown symbol: echo3.Echo"
+  "errorResponse":  {
+    "errorCode":  5,
+    "errorMessage":  "unknown symbol: echo3.Echo"
   }
 }
