@@ -1,0 +1,13 @@
+name: slack-notify2
+on:
+  push:
+  status:
+  check_run:
+    types: [created,completed]
+  check_suite:
+    types: [created,completed]
+jobs:
+  echo2:
+    runs-on: ubuntu-latest
+    steps:
+    - run: echo ${{ github.event_name }}
