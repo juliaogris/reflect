@@ -1,7 +1,7 @@
 name: slack-notify
 on:
   check_run:
-    types: [completed]
+    types: [created, rerequested, completed]
 jobs:
   slack-notify:
     # if: ${{ contains(github.event.branches.*.name, 'master') && (github.event.state == 'failure' || github.event.state == 'error')}}
