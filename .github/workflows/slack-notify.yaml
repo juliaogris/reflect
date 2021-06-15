@@ -1,6 +1,5 @@
 name: build-checker
-on:
-  - status
+on: status
 jobs:
   slack-notify:
     # if: ${{ contains(github.event.branches.*.name, 'master') && (github.event.state == 'failure' || github.event.state == 'error')}}
