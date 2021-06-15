@@ -1,4 +1,4 @@
-name: build-checker
+name: slack-notify
 on: status
 jobs:
   slack-notify:
