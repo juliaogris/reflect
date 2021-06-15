@@ -1,7 +1,7 @@
 name: slack-notify
 on:
   check_run:
-    types: [created, rerequested, completed]
+    types: [completed]
 jobs:
   slack-notify:
     # if: ${{ contains(github.event.branches.*.name, 'master') && (github.event.state == 'failure' || github.event.state == 'error')}}
@@ -12,4 +12,4 @@ jobs:
       BRANCH: master
     steps:
     - uses: actions/checkout@v2
-    - run: ${GITHUB_WORKSPACE}/.github/workflows/slack-notify.sh <<< "${{secret.SLACK_TOKEN}}"
+    - run: ${GITHUB_WORKSPACE}/.github/workflows/slack-notify.sh <<< "${{ secrets.SLACK_TOKEN }}"
