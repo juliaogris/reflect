@@ -169,12 +169,22 @@ func run(req *rpb.ServerReflectionRequest, g globals) error {
 	if err != nil {
 		return err
 	}
-	defer stream.CloseSend()
+	defer closeAndDrain(stream)
 	resp, err := send(stream, req)
 	if err != nil {
 		return err
 	}
+
 	return printProto(g.out, resp, g.Format)
+}
+
+func closeAndDrain(stream rpb.ServerReflection_ServerReflectionInfoClient) {
+	_ = stream.CloseSend()
+	for {
+		if _, err := stream.Recv(); err != nil {
+			return
+		}
+	}
 }
 
 func newStream(ctx context.Context, g globals) (rpb.ServerReflection_ServerReflectionInfoClient, error) {
