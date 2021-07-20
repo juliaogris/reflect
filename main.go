@@ -84,7 +84,7 @@ func (cfg *config) AfterApply() error {
 	if cfg.Out != "-" {
 		var err error
 		if cfg.out, err = os.Create(cfg.Out); err != nil {
-			return errors.WithStack(err)
+			return errors.Wrap(err, "cannot create output file")
 		}
 	}
 	cfg.hostAddress = cfg.Address
@@ -104,11 +104,11 @@ func (f *fdsCmd) Run(g globals) error {
 func decode(b64 string, m protoreflect.ProtoMessage, g globals) error {
 	b, err := base64.StdEncoding.DecodeString(b64)
 	if err != nil {
-		return errors.WithStack(err)
+		return errors.Wrap(err, "cannot decode b64 string")
 	}
 	err = proto.Unmarshal(b, m)
 	if err != nil {
-		return errors.WithStack(err)
+		return errors.Wrap(err, "cannot decode proto message")
 	}
 	return printProto(g.out, m, g.Format)
 }
@@ -169,12 +169,22 @@ func run(req *rpb.ServerReflectionRequest, g globals) error {
 	if err != nil {
 		return err
 	}
-	defer stream.CloseSend()
+	defer closeAndDrain(stream)
 	resp, err := send(stream, req)
 	if err != nil {
 		return err
 	}
+
 	return printProto(g.out, resp, g.Format)
+}
+
+func closeAndDrain(stream rpb.ServerReflection_ServerReflectionInfoClient) {
+	_ = stream.CloseSend()
+	for {
+		if _, err := stream.Recv(); err != nil {
+			return
+		}
+	}
 }
 
 func newStream(ctx context.Context, g globals) (rpb.ServerReflection_ServerReflectionInfoClient, error) {
@@ -224,14 +234,14 @@ func printProto(w io.Writer, m protoreflect.ProtoMessage, format string) error {
 		return err
 	}
 	_, err = w.Write(b)
-	return errors.WithStack(err)
+	return errors.Wrap(err, "cannot print proto")
 }
 
 func jsonString(m protoreflect.ProtoMessage) ([]byte, error) {
 	marshaler := protojson.MarshalOptions{Multiline: true}
 	out, err := marshaler.Marshal(m)
 	if err != nil {
-		return nil, errors.WithStack(err)
+		return nil, errors.Wrap(err, "cannot jsonString")
 	}
 	return out, nil
 }
@@ -239,7 +249,7 @@ func jsonString(m protoreflect.ProtoMessage) ([]byte, error) {
 func base64String(m protoreflect.ProtoMessage) ([]byte, error) {
 	b, err := proto.Marshal(m)
 	if err != nil {
-		return nil, errors.WithStack(err)
+		return nil, errors.Wrap(err, "cannot base64String")
 	}
 	return []byte(base64.StdEncoding.EncodeToString(b)), nil
 }
@@ -247,7 +257,7 @@ func base64String(m protoreflect.ProtoMessage) ([]byte, error) {
 func binString(m protoreflect.ProtoMessage) ([]byte, error) {
 	out, err := proto.Marshal(m)
 	if err != nil {
-		return nil, errors.WithStack(err)
+		return nil, errors.Wrap(err, "cannot binString")
 	}
 	return out, nil
 }
@@ -255,7 +265,7 @@ func binString(m protoreflect.ProtoMessage) ([]byte, error) {
 func textString(m protoreflect.ProtoMessage) ([]byte, error) {
 	out, err := prototext.Marshal(m)
 	if err != nil {
-		return nil, errors.WithStack(err)
+		return nil, errors.Wrap(err, "cannot textString")
 	}
 	return out, nil
 }

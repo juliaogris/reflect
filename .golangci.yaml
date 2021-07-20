@@ -13,7 +13,7 @@ issues:
       text: 'G304'
 
 linters:
-  enable-all: true # golangci-lint v1.36.0
+  enable-all: true
   disable:
     - exhaustivestruct
     - forbidigo
@@ -21,9 +21,12 @@ linters:
     - gochecknoglobals
     - goconst
     - goerr113
+    - golint
+    - interfacer
     - lll
     - maligned
     - nlreturn
     - paralleltest
+    - scopelint
     - testpackage
     - wsl
