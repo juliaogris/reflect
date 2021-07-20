@@ -38,8 +38,9 @@ type config struct {
 	Filename   filenameCmd      `cmd:"" help:"Call file_by_filename"`
 	Extension  extensionCmd     `cmd:"" help:"Call file_containing_extension"`
 	Extensions extensionsCmd    `cmd:"" help:"Call all_extension_numbers_of_type"`
-	FDS        fdsCmd           `cmd:"" help:"Decode base64 encoded FileDescriptor"`
-	FD         fdCmd            `cmd:"" help:"Decode base64 encoded FileDescriptorSet"`
+	FDS        fdsCmd           `cmd:"" help:"Decode base64 encoded FileDescriptorSet"`
+	FD         fdCmd            `cmd:"" help:"Decode base64 encoded FileDescriptor"`
+	FDSF       fdsfCmd          `cmd:"" help:"Decode proto encoded FileDescriptorSet.pb file"`
 }
 
 type servicesCmd struct{}
@@ -67,6 +68,10 @@ type fdCmd struct {
 
 type fdsCmd struct {
 	FileDescriptorSet string `arg:""`
+}
+
+type fdsfCmd struct {
+	FileDescriptorSetFile kong.FileContentFlag `arg:""`
 }
 
 func main() {
@@ -99,6 +104,15 @@ func (f *fdCmd) Run(g globals) error {
 func (f *fdsCmd) Run(g globals) error {
 	m := &dpb.FileDescriptorSet{}
 	return decode(f.FileDescriptorSet, m, g)
+}
+
+func (f *fdsfCmd) Run(g globals) error {
+	m := &dpb.FileDescriptorSet{}
+	err := proto.Unmarshal(f.FileDescriptorSetFile, m)
+	if err != nil {
+		return errors.Wrap(err, "cannot decode proto message")
+	}
+	return printProto(g.out, m, g.Format)
 }
 
 func decode(b64 string, m protoreflect.ProtoMessage, g globals) error {
