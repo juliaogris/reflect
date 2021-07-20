@@ -27,7 +27,7 @@ func (s *Server) HelloStream(req *HelloRequest, stream Echo_HelloStreamServer) e
 		resp := fmt.Sprintf("%d. %s", i, req.Message)
 		err := stream.Send(&HelloResponse{RobotResponse: resp})
 		if err != nil {
-			return errors.WithStack(err)
+			return errors.Wrap(err, "cannot send on HelloStream")
 		}
 	}
 	return nil
