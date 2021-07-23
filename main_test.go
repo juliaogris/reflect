@@ -195,7 +195,7 @@ func TestReflectSuite(t *testing.T) {
 	suite.Run(t, &ReflectSuite{format: "bin", pbVersion: 3})
 	suite.Run(t, &ReflectSuite{format: "json", pbVersion: 2})
 	suite.Run(t, &ReflectSuite{format: "base64", pbVersion: 2})
-	suite.Run(t, &ReflectSuite{format: "bin", pbVersion: 3})
+	suite.Run(t, &ReflectSuite{format: "bin", pbVersion: 2})
 }
 
 type ReflectSuite struct {
